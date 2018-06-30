@@ -41,6 +41,21 @@ ISR(INT0_vect)		     //ISR for external interrupt INT0.
 	UART_send_string("ON");
 }
 
+/* // Secnario 2
+ISR(INT0_vect)		     //ISR for external interrupt INT0.
+{
+	static int OnOff_Flag = 0;
+	_delay_ms(500);      //for debouncing of the switch.
+	UART_send_string("pressed");
+	PORTD ^= (1<<PD7);   //Toggle the LED.
+	OnOff_Flag ^= 1;
+	if(OnOff_Flag == 0)
+		UART_send_string("OFF");
+	if(OnOff_Flag == 1)
+		UART_send_string("ON");
+}
+*/
+
 //--------------------- The Driver of UART -------------------------
 void Uart_init(long BaudRate)
 {
