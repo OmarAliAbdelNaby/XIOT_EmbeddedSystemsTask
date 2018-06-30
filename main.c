@@ -20,22 +20,22 @@ int main()
 	DDRD  = (1<<PD7);    //Data Direction Register is set to 1 for the LED as output.
 	PORTD = (1<<PD7);    //Data Register is set to 1 for the LED.
 	GICR  = (1<<INT0);   //General interrupt Control Register the pin INT0 is set to 1
-					 	           //to enable its interrupt this pin is responsible for the external
-					             //interrupt connected here with a switch in pin PD2.
+			     //to enable its interrupt this pin is responsible for the external
+		             //interrupt connected here with a switch in pin PD2.
 	MCUCR = 0x02;        //MCU Control Register 0x02 to make INT0 falling edge triggered.
-	sei();			         //Enable interrupts, opens the global interrupt.
+	sei();	 	     //Enable interrupts, opens the global interrupt.
 
 	Uart_init(9600);     //Setting the Baud rate up.
 	UART_send_string("OFF");
 
-	while(1);		         //wait here.
+	while(1);	     //wait here.
 
 	return 0;
 }
 
 ISR(INT0_vect)		     //ISR for external interrupt INT0.
 {
-  _delay_ms(500);      //for debouncing of the switch.
+  _delay_ms(500);            //for debouncing of the switch.
 	UART_send_string("pressed");
 	PORTD &=~ (1<<PD7);  //Turn the LED on.
 	UART_send_string("ON");
